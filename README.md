@@ -12,13 +12,14 @@
 
 # Create your own instance
 
-1. Clone the latest version of the repository
+1. Set up the instance
 ```bash
+# Clone the repository
 git clone https://github.com/unrealfar/zencipher
-```
 
-3. Install necessary packages
-```bash
+cd .
+
+# Install the requirements
 python3 -m pip install -r requirements.txt
 ```
 
@@ -38,6 +39,9 @@ SECRET_KEY="<A secret key for FastAPI(anything)>"
 python3 -m main
 ```
 
+> Your ZenCipher instance is ready for use.
+
 # Contact
+- [@github](https://github.com/unrealfar)
 - [@discord](https://discord.gg/PgYQZcBKQm)
 - [@instagram](https://instagram.com/unrealfarrr)

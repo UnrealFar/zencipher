@@ -24,7 +24,7 @@ setTimeout(typewriterEffect(text2, "typerwriter-text2"), 0)
 
 const cursor = document.getElementById("typewriter-loop")
 
-const texts = ["Easy to use", "Double-layer secure encryption"]
+const texts = ["Easy to use", "Double-layer secure encryption", "Open-sourced", "Free to use"]
 
 const timeout = ms => new Promise(r => setTimeout(r, ms));
 
