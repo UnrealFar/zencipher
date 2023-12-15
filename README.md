@@ -8,6 +8,7 @@
 
 # Contribute to ZenCipher
 > Feel free to make pull requests and issues to contribute to the development of our project.
+> Contact me for collaborations or to give suggestions at [Contact](#Contact)
 
 # Create your own instance
 
@@ -25,8 +26,8 @@ python3 -m pip install -r requirements.txt
 
 5. Create a public encryption using `cryptography.fernet`
 
-6. Create an os.env file and fill in the following
-```env
+6. Create an `os.env` file and fill in the following
+```py
 PUB_KEY="<Your public encryption key>"
 MONGO_KEY="<Your MongoDB URI>"
 SECRET_KEY="<A secret key for FastAPI(anything)>"
