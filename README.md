@@ -12,7 +12,7 @@
 
 # Create your own instance
 
-1. Set up the instance
+- Set up the instance
 ```bash
 # Clone the repository
 git clone https://github.com/unrealfar/zencipher
@@ -23,18 +23,17 @@ cd .
 python3 -m pip install -r requirements.txt
 ```
 
-4. Set up a database on MongoDB and get the MongoURI.
+- Set up a database on MongoDB and get the MongoURI.
+- Create a public encryption using `cryptography.fernet`
 
-5. Create a public encryption using `cryptography.fernet`
-
-6. Create an `os.env` file and fill in the following
+- Create an `os.env` file and fill in the following
 ```py
 PUB_KEY="<Your public encryption key>"
 MONGO_KEY="<Your MongoDB URI>"
 SECRET_KEY="<A secret key for FastAPI(anything)>"
 ```
 
-7. Run the code
+- Run the code
 ```bash
 python3 -m main
 ```
