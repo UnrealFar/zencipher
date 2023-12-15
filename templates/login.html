@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/static/index.css"/>
+    <script src="/static/typewriter.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>{{ title }}</h1>
+    </header>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/register">Register</a>
+    </nav>
+
+    <center>
+        <h1>Login</h1>
+        {% if err %}
+            <p style="color:red;">{{ err }}</p>
+        {% endif %}
+        <form action="/_login" method="post" enctype="multipart/form-data">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br>
+
+            <button type="submit">Login</button>
+        </form>
+    </center>
+</body>
+
+</html>

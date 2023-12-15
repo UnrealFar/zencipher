@@ -1,0 +1,7 @@
+__pycache__/*
+.pythonlibs/*
+.ump/*
+poetry.lock
+pyproject.toml
+*.replit
+*.nix

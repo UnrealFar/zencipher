@@ -1,0 +1,49 @@
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="A secure encrypted password manager">"
+        <meta name="author" content="farrr">
+        <title>{{ title }}</title>
+        <link rel="stylesheet" href="/static/index.css"/>
+    </head>
+
+    <body>
+        <header>
+            <h1>{{ title }}</h1>
+        </header>
+
+        <nav>
+            {% if username %}
+                <a href="/passwords">Passwords</a>
+                <a href="/logout">Logout</a>
+                <a href="#">{{ username }}</a>
+            {% else %}
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
+            {% endif %}
+        </nav>
+
+        <center>
+            <h2>Welcome to {{ title }}</h2>
+            Having a hard time remembering your passwords?<br>
+            Not being able to find a trustable password manager?<br>
+            We at {{ title }} are here to help!<br>
+
+            <br><br><br>
+            <span id="features" class="">
+                <b>Features:</b>
+                <span id="typewriter-loop"> </span>
+            </span>
+            <script src="/static/typewriter.js"></script>
+
+            <footer contenteditable>
+                <p>Your data is secure with us :)</p>
+                <p>Copyright © farrr 2024-present</p>
+            </footer>
+        </center>
+    </body>
+
+    </html>
