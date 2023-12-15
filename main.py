@@ -18,9 +18,8 @@ app = fastapi.FastAPI(
     title="ZenCipher",
 )
 app.add_middleware(
-    SessionMiddleware,
-    secret_key=os.environ["SECRET_KEY"]
-) #type: ignore
+    SessionMiddleware, secret_key=os.environ["SECRET_KEY"]
+)  # type: ignore
 app.mount("/static", StaticFiles(directory="static"), name="static")
 app.title = "ZenCipher"
 templates = Jinja2Templates(directory="templates")
@@ -31,7 +30,12 @@ async def root(
     request: Request,
 ):
     return templates.TemplateResponse(
-        "index.html", {"request": request, "title": app.title, "username":request.session.get("username")}
+        "index.html",
+        {
+            "request": request,
+            "title": app.title,
+            "username": request.session.get("username"),
+        },
     )
 
 
@@ -39,10 +43,7 @@ async def root(
     "/login",
 )
 async def login_page(request: Request, err: Optional[str] = None):
-    return templates.TemplateResponse(
-        "login.html", {
-            "request": request, "err": err}
-    )
+    return templates.TemplateResponse("login.html", {"request": request, "err": err})
 
 
 @app.post("/_login", response_class=HTMLResponse)
@@ -52,14 +53,17 @@ async def _login(request: Request):
     password = form_data.get("password")
     acc = await get_user(username=username.lower())
     if not acc:
-        return RedirectResponse(url="/login?err=User not found",
-                                status_code=status.HTTP_302_FOUND)
+        return RedirectResponse(
+            url="/login?err=User not found", status_code=status.HTTP_302_FOUND
+        )
     if check_password(password, acc.password):
         request.session["password"] = acc.password
         request.session["username"] = acc.username
-        return RedirectResponse(url="/",status_code=status.HTTP_302_FOUND)
+        return RedirectResponse(url="/", status_code=status.HTTP_302_FOUND)
     else:
-        return RedirectResponse(url="/login?err=Wrong password",status_code=status.HTTP_302_FOUND)
+        return RedirectResponse(
+            url="/login?err=Wrong password", status_code=status.HTTP_302_FOUND
+        )
 
 
 @app.get("/register", response_class=HTMLResponse)
@@ -83,16 +87,17 @@ async def _register(request: Request):
     acc = await get_user(username=username)
     if acc:
         return RedirectResponse(
-            url="/register?err=User with that username already exists",status_code=status.HTTP_302_FOUND
+            url="/register?err=User with that username already exists",
+            status_code=status.HTTP_302_FOUND,
         )
     acc = await create_user(username, password, email)
-    return RedirectResponse(url="/login",status_code=status.HTTP_302_FOUND)
+    return RedirectResponse(url="/login", status_code=status.HTTP_302_FOUND)
 
 
 @app.get("/logout")
 async def logout(request: Request):
-    request.session.pop("username",None)
-    request.session.pop("password",None)
+    request.session.pop("username", None)
+    request.session.pop("password", None)
     return RedirectResponse(url="/login")
 
 
@@ -102,7 +107,7 @@ async def passwords(
 ):
     username = request.session.get("username")
     password = request.session.get("password")
-    user = await get_user(username = username, password = password)
+    user = await get_user(username=username, password=password)
     if not user:
         return RedirectResponse(url="/login")
     passwords = await user.passwords()
@@ -149,13 +154,13 @@ async def new_password(
     back: Optional[str] = None,
     x_username: Optional[str] = Header(None),
     x_password: Optional[str] = Header(None),
-    content_type: str = Header()
+    content_type: str = Header(),
 ):
     username = x_username or request.session.get("username")
     password = x_password or request.session.get("password")
     if password is None:
         return {"message": "No authorization token provided"}
-    user = await get_user(username=username,password=password)
+    user = await get_user(username=username, password=password)
     if user is None:
         return {"message": "Invalid authorization token"}
     if content_type == "application/json":
@@ -165,11 +170,9 @@ async def new_password(
     else:
         print(content_type)
         return {"message": "Invalid content type"}
-    p = await user.new_password(pa['title'], pa['username'], pa['password'], pa['note'])
+    p = await user.new_password(pa["title"], pa["username"], pa["password"], pa["note"])
     if back:
-        return RedirectResponse(
-            url=back, status_code=status.HTTP_302_FOUND
-        )
+        return RedirectResponse(url=back, status_code=status.HTTP_302_FOUND)
     return {"message": "Password details successfully created!"}
 
 

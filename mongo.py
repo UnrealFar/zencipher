@@ -7,8 +7,7 @@ import utils
 import bcrypt
 
 
-
-client = AsyncIOMotorClient(os.environ['MONGO_URI'])
+client = AsyncIOMotorClient(os.environ["MONGO_URI"])
 db = client["DB"]
 
 instance = MotorAsyncIOInstance()
@@ -32,8 +31,10 @@ async def create_user(username, password, email):
     await user.commit()
     return user
 
+
 async def get_user(**kwargs):
     return await User.find_one(kwargs)
+
 
 @instance.register
 class User(Document):
@@ -51,34 +52,31 @@ class User(Document):
     def key(self) -> str:
         return utils.key_from_password(self.password, self.salt.encode())
 
-    async def new_password(
-        self,
-        title,
-        username,
-        password,
-        note = None
-    ):
+    async def new_password(self, title, username, password, note=None):
         key = self.key
         p = Password(
-            owner = self,
-            title = title,
-            username = utils.encrypt(username, key),
-            password = utils.encrypt(password, key),
-            note = note
+            owner=self,
+            title=title,
+            username=utils.encrypt(username, key),
+            password=utils.encrypt(password, key),
+            note=note,
         )
         await p.commit()
         return p
 
     async def passwords(self):
         ret = []
-        async for i in Password.find({"owner":self}):
-            ret.append({
-                "title": i.title,
-                "username": utils.decrypt(i.username, self.key),
-                "password": utils.decrypt(i.password, self.key),
-                "note": i.note
-            })
+        async for i in Password.find({"owner": self}):
+            ret.append(
+                {
+                    "title": i.title,
+                    "username": utils.decrypt(i.username, self.key),
+                    "password": utils.decrypt(i.password, self.key),
+                    "note": i.note,
+                }
+            )
         return ret
+
 
 @instance.register
 class Password(Document):

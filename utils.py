@@ -11,23 +11,23 @@ fer = Fernet(PUB_KEY.encode())
 
 def key_from_password(password, salt):
     key = bcrypt.kdf(
-        password=password.encode(),
-        salt=salt,
-        desired_key_bytes=32,
-        rounds=100
+        password=password.encode(), salt=salt, desired_key_bytes=32, rounds=100
     )
     key = base64.urlsafe_b64encode(key)
     return key.decode()
 
-def hash_password(password,salt):
-    return bcrypt.hashpw(base64.b64encode(hashlib.sha256(password.encode()).digest()), salt
+
+def hash_password(password, salt):
+    return bcrypt.hashpw(
+        base64.b64encode(hashlib.sha256(password.encode()).digest()), salt
     ).decode()
+
 
 def check_password(password, hashed):
     return bcrypt.checkpw(
-        base64.b64encode(hashlib.sha256(password.encode()).digest()),
-        hashed.encode()
+        base64.b64encode(hashlib.sha256(password.encode()).digest()), hashed.encode()
     )
+
 
 def encrypt(s: str, key) -> bytes:
     e = fer.encrypt(s.encode())
